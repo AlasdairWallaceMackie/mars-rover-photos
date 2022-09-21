@@ -9,7 +9,6 @@ body {
 
 .bg-space {
     background-image: url("./img/starscape2.jpg");
-    /* height: 100%; */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -20,6 +19,7 @@ body {
     text-transform: uppercase;
     font-size: 6rem;
     font-weight: 900;
+    letter-spacing: 5px;
 }
 
 .header--subtitle {
@@ -38,3 +38,32 @@ body {
         color: inherit;
         transform: translateY(10px);
     }
+
+#rover-select{
+    min-height: 100%;
+}
+
+.rover-select--header{
+    font-size: 4rem;
+}
+
+.rover{
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    border: 3px solid rgb(255, 255, 255, 0);
+    transition: border 0.5s;
+}
+    .rover:hover{
+        border: 3px solid white;
+        color: white
+    }
+
+    .rover img{
+    width: 15rem;
+}
+
+.rover--header{
+    text-transform: uppercase;
+}
