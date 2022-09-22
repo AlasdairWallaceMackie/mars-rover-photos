@@ -13,6 +13,7 @@ export default function RoverSelect(props){
             key={rover.id}
             name={rover.name}
             img={roverProfileImageData[rover.name]}
+            rover={rover}
         />
     ))
 
