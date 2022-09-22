@@ -7,6 +7,10 @@ body {
     font-family: abel;
 }
 
+main{
+    overflow-x: hidden;
+}
+
 .bg-space {
     background-image: url("./img/starscape2.jpg");
     background-attachment: fixed;
@@ -66,4 +70,8 @@ body {
 
 .rover--header{
     text-transform: uppercase;
+}
+
+.text-success-bright{
+    color: rgb(34, 191, 118)
 }
