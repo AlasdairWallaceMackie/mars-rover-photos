@@ -1,7 +1,6 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
-import {RoverContext} from "../data/roverContext"
 import roverProfileImageData from "../data/roverProfileImage"
 
 export default function RoverProfile(props){
@@ -23,13 +22,16 @@ export default function RoverProfile(props){
         </h3>
     </>
 
+
+
+
     return (
         <Link to={`/rovers/${props.name.toLowerCase()}/`} className="rover mb-3">
             <h1 className="rover--header">{props.name}</h1>
-            <img src={props.img} className="rounded-3"></img>
+            <img src={props.img} className="rounded-3" alt={props.name} ></img>
 
             {statusIndicatorElement}
-            {props.rover.status == "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
+            {props.rover.status === "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
         </Link>
     )
 }
