@@ -1,14 +1,14 @@
 import React from "react"
 
 import {RoverContext} from "../data/roverContext"
-import roverProfileImageData from "../data/roverProfileImage"
+import roverProfileImageData from "../data/roverProfileImages"
 
 import Rover from "./RoverProfile"
 
 
 export default function RoverSelect(props){
     const {roverData} = React.useContext(RoverContext)
-    const roverElements = roverData.map(rover => (
+    const roverElements = roverData.rovers.map(rover => (
         <Rover 
             key={rover.id}
             name={rover.name}

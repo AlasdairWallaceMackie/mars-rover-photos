@@ -1,7 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
-import roverProfileImageData from "../data/roverProfileImage"
+import roverProfileImageData from "../data/roverProfileImages"
 
 export default function RoverProfile(props){
     const statusIndicatorClasses = {
