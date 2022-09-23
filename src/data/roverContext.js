@@ -12,7 +12,7 @@ function RoverContextProvider(props){
     }, [])
 
     return (
-        <RoverContext.Provider value={{roverData: roverData.rovers}}>
+        <RoverContext.Provider value={{roverData: roverData}}>
             {props.children}
         </RoverContext.Provider>
     )
