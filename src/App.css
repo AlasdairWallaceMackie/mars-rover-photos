@@ -19,6 +19,17 @@ main{
     background-size: cover;
 }
 
+.loading-screen{
+    padding-top: 3rem;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.full-height{
+    height: 100vh;
+}
+
 .header--title {
     text-transform: uppercase;
     font-size: 6rem;
