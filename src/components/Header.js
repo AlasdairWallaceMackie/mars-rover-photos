@@ -9,7 +9,7 @@ export default function Header(props){
             <FadeIn transitionDuration={1000}>
                 <h1 className="header--title">Welcome to Mars</h1>
                 <h2 className="header--subtitle">Explore photos from NASA's Mars rovers</h2>
-                <a className="down-arrow" href="#rover-select">
+                <a className="animated-arrow animated-arrow-down" href="#rover-select">
                     <i className="ri-arrow-down-s-line ri-3x" />
                 </a>
                 <br/>

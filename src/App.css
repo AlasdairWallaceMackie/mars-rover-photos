@@ -42,16 +42,26 @@ main{
     filter: drop-shadow(3px 3px 3px black);
 }
 
-.down-arrow {
-    display: inline-block;
+.animated-arrow{
     text-decoration: none;
     color: inherit;
     transition: all 0.3s;
+}
+
+.animated-arrow-down {
+    display: inline-block;
     width: 8rem;
 }
-    .down-arrow:hover{
+    .animated-arrow-down:hover{
         color: inherit;
         transform: translateY(10px);
+    }
+
+.animated-arrow-left{
+    color:rgb(34, 191, 118)
+}
+    .animated-arrow-left:hover{
+        transform: translateX(-10px);
     }
 
 #rover-select{
