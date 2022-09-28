@@ -2,6 +2,7 @@ import React from "react"
 import {Link, useParams} from "react-router-dom"
 
 import {RoverContext} from "../data/roverContext"
+import RoverPhoto from "../components/RoverPhoto"
 
 export default function RoverSelect(props){
     const {roverData} = React.useContext(RoverContext)
@@ -10,7 +11,8 @@ export default function RoverSelect(props){
 
     const [earthDate, setEarthDate] = React.useState("")
     const [photoData, setPhotoData] = React.useState([])
-    let photoDataElements = <h2>Select an Earth date to get photographs</h2>
+    const [firstFetch, setFirstFetch] = React.useState(false)
+    let photoDataElements = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
 
 
 
@@ -26,18 +28,19 @@ export default function RoverSelect(props){
         fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${earthDate}`)
             .then(response => response.json())
             .then(data => setPhotoData(data.photos))
+        
+        setFirstFetch(true)
     }
 
-    console.log("EARTH DATE: " + earthDate)
+    // console.log("EARTH DATE: " + earthDate)
     console.log("Photo Data: " + JSON.stringify(photoData))
 
     if (photoData.length){
         photoDataElements = photoData.map(photo => (
-            <div>
-                <p>ID: {photo.id} -- {photo.camera.full_name}</p>
-                <img src={photo.img_src} style={{width: "500px"}}/>
-                <hr className="hr" />
-            </div>
+            <RoverPhoto 
+                key={photo.id}
+                photo={photo}
+            />
         ))
     }
 
@@ -79,28 +82,33 @@ export default function RoverSelect(props){
                     <form onSubmit={handleSubmit}>
                         <h1>PHOTOS</h1>
 
-                        <div className="d-flex mb-5">
-                            <input
-                                type="date"
-                                min={rover.launch_date}
-                                max={rover.max_date}
-                                onChange={event => handleChange(event)}
-                                required={true}
-                                className="form-control me-3"
-                                style={{width: "200px"}}
-                            />
+                        <div className="d-flex mb-5 col-8 col-md-5">
+                            <div className="input-group me-3">
+                                <span className="input-group-text" htmlFor="earth-date">Earth Date</span>
+                                <input
+                                    id="earth-date"
+                                    type="date"
+                                    min={rover.launch_date}
+                                    max={rover.max_date}
+                                    onChange={event => handleChange(event)}
+                                    required={true}
+                                    className="form-control"
+                                />
+                            </div>
                             <input type="submit" className="btn btn-secondary"/>
                         </div>
                     </form>
 
                     {photoDataElements}
                 </div> :
+                
+                
+                
                 <div>
                     <h1>Rover Data Not Found</h1>
                     <Link to="/"><button className="btn btn-secondary">Back to Home</button></Link>
                 </div>
             }
         </div>
-        
     )
 }
