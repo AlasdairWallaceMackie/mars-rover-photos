@@ -11,12 +11,61 @@ export default function RoverSelect(props){
 
     const [earthDate, setEarthDate] = React.useState("")
     const [photoData, setPhotoData] = React.useState([])
+    const [shownPhotos, setShownPhotos] = React.useState([])
+    const [cameras, setCameras] = React.useState(rover.cameras.map((c, index) => (
+        {
+            cameraObj: c,
+            selected: index === 0, // First camera is automatically selected
+        }
+    )))
     const [firstFetch, setFirstFetch] = React.useState(false)
+
+    const cameraButtons = cameras.map(c => {
+        const camera = c.cameraObj
+        return (
+            <>
+                <input
+                    type="checkbox"
+                    className="btn-check"
+                    id={`${camera.name}-checkbox`}
+                    value={camera.name}
+                    onChange={handleCameraSelect} 
+                    checked={c.selected}
+                />
+                <label className="btn btn-outline-secondary" htmlFor={`${camera.name}-checkbox`} title={camera.full_name}>{camera.name}</label>
+            </>
+        )
+    })
     let photoDataElements = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
 
 
 
-    // console.log(rover)
+    console.log(cameras)
+
+
+
+
+    function handleCameraSelect(event){
+        //! BUG: Async issue with setCameras and setShownPhotos
+        
+        const value = event.target.value
+
+        setCameras(prevState => prevState.map(camera => (
+            {
+                ...camera,
+                selected: camera.cameraObj.name === value ? !camera.selected : camera.selected,
+            }
+        )))
+        
+        const cameraNames = []
+        for (var i=0; i<cameras.length; i++){
+            if (cameras[i].selected)
+                cameraNames.push(cameras[i].cameraObj.name)
+        }
+        console.log(cameraNames)
+
+        setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
+    }
 
     function handleChange(event){
         setEarthDate(event.target.value)
@@ -32,11 +81,12 @@ export default function RoverSelect(props){
         setFirstFetch(true)
     }
 
-    // console.log("EARTH DATE: " + earthDate)
-    console.log("Photo Data: " + JSON.stringify(photoData))
+
+
+
 
     if (photoData.length){
-        photoDataElements = photoData.map(photo => (
+        photoDataElements = shownPhotos.map(photo => (
             <RoverPhoto 
                 key={photo.id}
                 photo={photo}
@@ -99,7 +149,18 @@ export default function RoverSelect(props){
                         </div>
                     </form>
 
-                    {photoDataElements}
+                    <h2 className="text-center">CAMERAS</h2>
+                    <div className="btn-group bg-light d-flex">
+                        {cameraButtons}
+                    </div>
+                    <br />
+                    <p>Showing: {shownPhotos.length} photos</p>
+                    
+                    <br />
+
+                    <div className="container-fluid d-flex flex-wrap">
+                        {photoDataElements}
+                    </div>
                 </div> :
                 
                 
