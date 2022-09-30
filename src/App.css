@@ -94,5 +94,11 @@ main{
 }
 
 .text-success-bright{
-    color: rgb(34, 191, 118)
+    color: rgb(34, 191, 118);
+}
+
+.rover-photo img{
+    align-self: center;
+    width: 300px;
+    margin: 1rem;
 }
