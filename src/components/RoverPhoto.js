@@ -8,6 +8,8 @@ export default function RoverPhoto(props){
             <img
                 src={photo.img_src} 
                 alt={`[${photo.camera.name}] -- ID: ${photo.id}`}
+                data-index={props.index}
+                onClick={props.handleClick}
             />
         </div>
     )
