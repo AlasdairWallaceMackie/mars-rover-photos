@@ -12,6 +12,8 @@ export default function RoverSelect(props){
     const [earthDate, setEarthDate] = React.useState("")
     const [photoData, setPhotoData] = React.useState([])
     const [shownPhotos, setShownPhotos] = React.useState([])
+    const [currentFocusIndex, setCurrentFocusIndex] = React.useState(0)
+    const [showZoom, setShowZoom] = React.useState(false)
     const [cameras, setCameras] = React.useState(rover.cameras.map((c, index) => (
         {
             cameraObj: c,
@@ -19,6 +21,7 @@ export default function RoverSelect(props){
         }
     )))
     const [firstFetch, setFirstFetch] = React.useState(false)
+
 
     const cameraButtons = cameras.map(c => {
         const camera = c.cameraObj
@@ -40,7 +43,7 @@ export default function RoverSelect(props){
 
 
 
-    console.log(cameras)
+    // console.log(cameras)
 
 
 
@@ -81,18 +84,27 @@ export default function RoverSelect(props){
         setFirstFetch(true)
     }
 
+    function handlePhotoClick(event){
+        const newIndex = event.target.dataset.index
+        setCurrentFocusIndex(newIndex)
+        setShowZoom(true)
+    }
 
 
 
 
     if (photoData.length){
-        photoDataElements = shownPhotos.map(photo => (
+        photoDataElements = shownPhotos.map((photo, index) => (
             <RoverPhoto 
                 key={photo.id}
                 photo={photo}
+                index={index}
+                handleClick={handlePhotoClick}
             />
         ))
     }
+
+
 
 
     return (
@@ -103,8 +115,8 @@ export default function RoverSelect(props){
                         <i className="ri-arrow-left-s-line ri-3x d-inline-block" />
                         <span className="fs-2">Back</span>
                     </Link>
-                    <h1>Rover Detail Page</h1>
-                    <h1>{rover.name}</h1>
+
+                    <h1 className="rover-title">{rover.name}</h1>
 
                     <table className="table text-light">
                         <tbody>
@@ -154,18 +166,27 @@ export default function RoverSelect(props){
                         {cameraButtons}
                     </div>
                     <br />
-                    <p>Showing: {shownPhotos.length} photos</p>
+                    <p>Showing {shownPhotos.length} out of {photoData.length} photos</p>
                     
                     <br />
 
                     <div className="container-fluid d-flex flex-wrap">
                         {photoDataElements}
                     </div>
-                </div> :
+                
+                    {(shownPhotos.length && showZoom) && 
+                        <div id="zoom-window" onClick={() => setShowZoom(false)}>
+                            <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
+                        </div>
+                    }
+                    {/* //TODO: Add arrows to cycle through photos */}
+                </div> 
                 
                 
                 
-                <div>
+                
+                
+                :<div>
                     <h1>Rover Data Not Found</h1>
                     <Link to="/"><button className="btn btn-secondary">Back to Home</button></Link>
                 </div>
