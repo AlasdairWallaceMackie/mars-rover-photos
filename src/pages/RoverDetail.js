@@ -17,7 +17,6 @@ export default function RoverSelect(props){
     const [cameras, setCameras] = React.useState(rover.cameras.map((c, index) => (
         {
             cameraObj: c,
-            selected: index === 0, // First camera is automatically selected
         }
     )))
     const [firstFetch, setFirstFetch] = React.useState(false)
@@ -43,34 +42,30 @@ export default function RoverSelect(props){
 
 
 
-    // console.log(cameras)
-
-
 
 
     function handleCameraSelect(event){
-        //! BUG: Async issue with setCameras and setShownPhotos
-        
         const value = event.target.value
-
-        setCameras(prevState => prevState.map(camera => (
+        const newCameraSet = cameras.map(camera => (
             {
                 ...camera,
                 selected: camera.cameraObj.name === value ? !camera.selected : camera.selected,
             }
-        )))
+        ))
+
+        setCameras(newCameraSet)
         
         const cameraNames = []
-        for (var i=0; i<cameras.length; i++){
-            if (cameras[i].selected)
-                cameraNames.push(cameras[i].cameraObj.name)
+        for (var i=0; i<newCameraSet.length; i++){
+            if (newCameraSet[i].selected)
+                cameraNames.push(newCameraSet[i].cameraObj.name)
         }
         console.log(cameraNames)
 
         setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
     }
 
-    function handleChange(event){
+    function handleChangeEarthDate(event){
         setEarthDate(event.target.value)
     }
 
@@ -107,10 +102,12 @@ export default function RoverSelect(props){
 
 
 
+
+
     return (
         <div className="full-height">
             {rover ? 
-                <div>
+                <div className="py-3">
                     <Link to="/" className="animated-arrow animated-arrow-left">
                         <i className="ri-arrow-left-s-line ri-3x d-inline-block" />
                         <span className="fs-2">Back</span>
@@ -152,7 +149,7 @@ export default function RoverSelect(props){
                                     type="date"
                                     min={rover.launch_date}
                                     max={rover.max_date}
-                                    onChange={event => handleChange(event)}
+                                    onChange={event => handleChangeEarthDate(event)}
                                     required={true}
                                     className="form-control"
                                 />
@@ -161,23 +158,29 @@ export default function RoverSelect(props){
                         </div>
                     </form>
 
-                    <h2 className="text-center">CAMERAS</h2>
-                    <div className="btn-group bg-light d-flex">
-                        {cameraButtons}
-                    </div>
-                    <br />
-                    <p>Showing {shownPhotos.length} out of {photoData.length} photos</p>
-                    
-                    <br />
+                    {firstFetch ?
+                        <>
+                            <h2 className="text-center">CAMERAS</h2>
+                            <div className="btn-group bg-light d-flex flex-wrap">
+                                {cameraButtons}
+                            </div>
+
+                            {/* //TODO "Select All"/"Select None" buttons */}
+
+                            <p className="my-3">Showing {shownPhotos.length} out of {photoData.length} photos</p>
+                        </> :
+                        <></>
+                    }
 
                     <div className="container-fluid d-flex flex-wrap">
                         {photoDataElements}
                     </div>
                 
-                    {(shownPhotos.length && showZoom) && 
+                    {(shownPhotos.length && showZoom) ? 
                         <div id="zoom-window" onClick={() => setShowZoom(false)}>
                             <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
-                        </div>
+                        </div> :
+                        <></>
                     }
                     {/* //TODO: Add arrows to cycle through photos */}
                 </div> 
