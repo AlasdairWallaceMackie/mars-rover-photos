@@ -125,6 +125,6 @@ main{
     z-index: 9999;
 }
     #zoom-window img{
-        width: 75%;
+        height: 80%;
         align-self: center;
     }
