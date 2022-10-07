@@ -24,8 +24,12 @@ export default function RoverSelect(props){
 
     const cameraButtons = cameras.map(c => {
         const camera = c.cameraObj
+
+        const hasPhotos = photoData.find(photo => photo.camera.name === camera.name) ? true : false
+        
         return (
             <>
+                {/* //TODO: Turn this pair of elements into its own component, add key prop */}
                 <input
                     type="checkbox"
                     className="btn-check"
@@ -33,11 +37,13 @@ export default function RoverSelect(props){
                     value={camera.name}
                     onChange={handleCameraSelect} 
                     checked={c.selected}
+                    disabled={!hasPhotos}
                 />
-                <label className="btn btn-outline-secondary" htmlFor={`${camera.name}-checkbox`} title={camera.full_name}>{camera.name}</label>
+                <label className={`btn ${hasPhotos ? "btn-light border" : "btn-outline-secondary"}`} htmlFor={`${camera.name}-checkbox`} title={camera.full_name}>{camera.name}</label>
             </>
         )
     })
+    
     let photoDataElements = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
 
 
@@ -60,7 +66,6 @@ export default function RoverSelect(props){
             if (newCameraSet[i].selected)
                 cameraNames.push(newCameraSet[i].cameraObj.name)
         }
-        console.log(cameraNames)
 
         setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
     }
@@ -108,6 +113,7 @@ export default function RoverSelect(props){
         <div className="full-height">
             {rover ? 
                 <div className="py-3">
+                    {/* //TODO: Back button and rover name should be on same line */}
                     <Link to="/" className="animated-arrow animated-arrow-left">
                         <i className="ri-arrow-left-s-line ri-3x d-inline-block" />
                         <span className="fs-2">Back</span>
@@ -161,7 +167,7 @@ export default function RoverSelect(props){
                     {firstFetch ?
                         <>
                             <h2 className="text-center">CAMERAS</h2>
-                            <div className="btn-group bg-light d-flex flex-wrap">
+                            <div className="btn-group d-flex flex-wrap">
                                 {cameraButtons}
                             </div>
 
