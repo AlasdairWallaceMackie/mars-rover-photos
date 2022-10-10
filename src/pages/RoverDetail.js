@@ -112,14 +112,13 @@ export default function RoverSelect(props){
     return (
         <div className="full-height">
             {rover ? 
-                <div className="py-3">
-                    {/* //TODO: Back button and rover name should be on same line */}
-                    <Link to="/" className="animated-arrow animated-arrow-left">
-                        <i className="ri-arrow-left-s-line ri-3x d-inline-block" />
-                        <span className="fs-2">Back</span>
+                <div className="py-3 position-relative">
+                    <Link to="/" className="animated-arrow animated-arrow-left position-absolute d-flex">
+                        <i className="ri-arrow-left-s-line ri-3x" />
+                        <span className="fs-2 mt-3">Back</span>
                     </Link>
 
-                    <h1 className="rover-title">{rover.name}</h1>
+                    <h1 className="rover-title mb-4">{rover.name}</h1>
 
                     <table className="table text-light">
                         <tbody>
