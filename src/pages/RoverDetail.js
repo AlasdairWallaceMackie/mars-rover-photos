@@ -54,6 +54,12 @@ export default function RoverSelect(props){
         ))
     }
 
+    const returnToTopButton = shownPhotos.length ? 
+        <a href="#rover-detail" className="d-flex justify-content-center text-decoration-none my-5">
+            <button className="btn btn-lg btn-light">Return to Top</button>
+        </a> :
+        <></>
+
 
 
 
@@ -110,7 +116,7 @@ export default function RoverSelect(props){
     return (
         <div className="full-height">
             {rover ? 
-                <div className="py-3 position-relative">
+                <div id="rover-detail" className="py-3 position-relative">
                     <Link to="/" className="animated-arrow animated-arrow-left position-absolute d-flex">
                         <i className="ri-arrow-left-s-line ri-3x" />
                         <span className="fs-2 mt-3">Back</span>
@@ -186,10 +192,9 @@ export default function RoverSelect(props){
                         <></>
                     }
                     {/* //TODO: Add arrows to cycle through photos */}
-                </div> 
 
-                //TODO: Button to return to top of page
-
+                    {returnToTopButton}
+                </div>
                 //TODO: Pagination?
                 
                 
