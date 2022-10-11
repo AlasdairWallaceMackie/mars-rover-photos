@@ -4,6 +4,8 @@ import {Link} from "react-router-dom"
 import roverProfileImageData from "../data/roverProfileImages"
 
 export default function RoverProfile(props){
+    const roverStatus = props.rover.status
+    
     const statusIndicatorClasses = {
         "active": "spinner-grow spinner-grow-sm mt-2",
         "complete": "ri-checkbox-blank-circle-fill ri-xs mt-1",
@@ -16,9 +18,9 @@ export default function RoverProfile(props){
     }
 
     const statusIndicatorElement = <>
-        <h3 className={`d-flex mt-2 justify-content-center ${statusColorClass[props.rover.status]}`}>
-            <div className={statusIndicatorClasses[props.rover.status]}></div>
-            <span className="ms-2">Status: {props.rover.status.toUpperCase()}</span>
+        <h3 className={`d-flex mt-2 justify-content-center ${statusColorClass[roverStatus]}`}>
+            <div className={statusIndicatorClasses[roverStatus]}></div>
+            <span className="ms-2">Status: {roverStatus.toUpperCase()}</span>
         </h3>
     </>
 
@@ -31,7 +33,8 @@ export default function RoverProfile(props){
             <img src={props.img} className="rounded-3" alt={props.name} ></img>
 
             {statusIndicatorElement}
-            {props.rover.status === "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
+            {roverStatus === "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
+            {roverStatus === "active" && <h4>Martian Days: {props.rover.max_sol}</h4>}
         </Link>
     )
 }
