@@ -1,8 +1,10 @@
 import React from "react"
 import {Link, useParams} from "react-router-dom"
+import {nanoid} from "nanoid"
 
 import {RoverContext} from "../data/roverContext"
 import RoverPhoto from "../components/RoverPhoto"
+import CameraButton from "../components/CameraButton"
 
 export default function RoverSelect(props){
     const {roverData} = React.useContext(RoverContext)
@@ -14,9 +16,10 @@ export default function RoverSelect(props){
     const [shownPhotos, setShownPhotos] = React.useState([])
     const [currentFocusIndex, setCurrentFocusIndex] = React.useState(0)
     const [showZoom, setShowZoom] = React.useState(false)
-    const [cameras, setCameras] = React.useState(rover.cameras.map((c, index) => (
+    const [cameras, setCameras] = React.useState(rover.cameras.map(c => (
         {
             cameraObj: c,
+            selected: false,
         }
     )))
     const [firstFetch, setFirstFetch] = React.useState(false)
@@ -28,23 +31,29 @@ export default function RoverSelect(props){
         const hasPhotos = photoData.find(photo => photo.camera.name === camera.name) ? true : false
         
         return (
-            <>
-                {/* //TODO: Turn this pair of elements into its own component, add key prop */}
-                <input
-                    type="checkbox"
-                    className="btn-check"
-                    id={`${camera.name}-checkbox`}
-                    value={camera.name}
-                    onChange={handleCameraSelect} 
-                    checked={c.selected}
-                    disabled={!hasPhotos}
-                />
-                <label className={`btn ${hasPhotos ? "btn-light border" : "btn-outline-secondary"}`} htmlFor={`${camera.name}-checkbox`} title={camera.full_name}>{camera.name}</label>
-            </>
+            <CameraButton 
+                key={nanoid()}
+                camera={camera}
+                handleCameraSelect={handleCameraSelect}
+                disabled={!hasPhotos}
+                selected={c.selected}
+            />
         )
     })
     
     let photoDataElements = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
+
+    if (photoData.length){
+        photoDataElements = shownPhotos.map((photo, index) => (
+            <RoverPhoto 
+                key={photo.id}
+                photo={photo}
+                index={index}
+                handleClick={handlePhotoClick}
+            />
+        ))
+    }
+
 
 
 
@@ -92,17 +101,6 @@ export default function RoverSelect(props){
 
 
 
-
-    if (photoData.length){
-        photoDataElements = shownPhotos.map((photo, index) => (
-            <RoverPhoto 
-                key={photo.id}
-                photo={photo}
-                index={index}
-                handleClick={handlePhotoClick}
-            />
-        ))
-    }
 
 
 
@@ -189,6 +187,10 @@ export default function RoverSelect(props){
                     }
                     {/* //TODO: Add arrows to cycle through photos */}
                 </div> 
+
+                //TODO: Button to return to top of page
+
+                //TODO: Pagination?
                 
                 
                 
