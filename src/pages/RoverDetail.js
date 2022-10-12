@@ -105,6 +105,13 @@ export default function RoverSelect(props){
         setShowZoom(true)
     }
 
+    function handleMostRecentDayClick(){
+        let input = document.getElementById("earth-date")
+        let maxDate = input.getAttribute("max")
+
+        input.value = maxDate
+        setEarthDate(maxDate)
+    }
 
 
 
@@ -150,8 +157,8 @@ export default function RoverSelect(props){
                     <form onSubmit={handleSubmit}>
                         <h1>PHOTOS</h1>
 
-                        <div className="d-flex mb-5 col-8 col-md-5">
-                            <div className="input-group me-3">
+                        <div className="d-flex mb-5 col-8 col-md-6 flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-none">
+                            <div className="input-group me-3 mb-3 mb-sm-0">
                                 <span className="input-group-text" htmlFor="earth-date">Earth Date</span>
                                 <input
                                     id="earth-date"
@@ -164,6 +171,7 @@ export default function RoverSelect(props){
                                 />
                             </div>
                             <input type="submit" className="btn btn-secondary"/>
+                            <button type="button" className="btn btn-light ms-2 text-nowrap" onClick={handleMostRecentDayClick}>Most Recent</button>
                         </div>
                     </form>
 
