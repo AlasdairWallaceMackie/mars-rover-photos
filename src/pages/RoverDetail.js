@@ -16,26 +16,33 @@ export default function RoverSelect(props){
     const [shownPhotos, setShownPhotos] = React.useState([])
     const [currentFocusIndex, setCurrentFocusIndex] = React.useState(0)
     const [showZoom, setShowZoom] = React.useState(false)
-    const [cameras, setCameras] = React.useState(rover.cameras.map(c => (
-        {
-            cameraObj: c,
-            selected: false,
-        }
-    )))
+    const [cameras, setCameras] = React.useState([])
     const [firstFetch, setFirstFetch] = React.useState(false)
 
+    React.useEffect(() => {
+        setCameras(rover.cameras.map(c => {
+            const hasPhotos = photoData.find(photo => photo.camera.name === c.name) ? true : false
+            
+            return {
+                cameraObj: c,
+                disabled: !hasPhotos,
+                selected: false,
+            }
+        }))
+    }, [photoData])
 
-    const cameraButtons = cameras.map(c => {
-        const camera = c.cameraObj
+    React.useEffect(() => {
+        let cameraNames = cameras.map(camera => camera.selected ? camera.cameraObj.name : "")        
+        setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
+    }, [cameras])
 
-        const hasPhotos = photoData.find(photo => photo.camera.name === camera.name) ? true : false
-        
+    const cameraButtons = cameras.map(c => {        
         return (
             <CameraButton 
                 key={nanoid()}
-                camera={camera}
+                camera={c.cameraObj}
                 handleCameraSelect={handleCameraSelect}
-                disabled={!hasPhotos}
+                disabled={c.disabled}
                 selected={c.selected}
             />
         )
@@ -67,22 +74,16 @@ export default function RoverSelect(props){
 
     function handleCameraSelect(event){
         const value = event.target.value
-        const newCameraSet = cameras.map(camera => (
-            {
+
+        setCameras(cameras.map(camera => {
+            const hasPhotos = photoData.find(photo => photo.camera.name === camera.cameraObj.name) ? true : false
+
+            return {
                 ...camera,
+                disabled: !hasPhotos,
                 selected: camera.cameraObj.name === value ? !camera.selected : camera.selected,
             }
-        ))
-
-        setCameras(newCameraSet)
-        
-        const cameraNames = []
-        for (var i=0; i<newCameraSet.length; i++){
-            if (newCameraSet[i].selected)
-                cameraNames.push(newCameraSet[i].cameraObj.name)
-        }
-
-        setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
+        }))
     }
 
     function handleChangeEarthDate(event){
@@ -113,8 +114,18 @@ export default function RoverSelect(props){
         setEarthDate(maxDate)
     }
 
-
-
+    function selectAllCameras(setting){
+        if (setting == true || setting == false){
+            setCameras(prevState => prevState.map(c => (
+                {
+                    ...c,
+                    selected: c.disabled ? false : setting
+                }
+            )))
+        }
+        else
+            console.log("ERROR, selectAllCameras missing parameter")
+    }
 
 
 
@@ -182,7 +193,12 @@ export default function RoverSelect(props){
                                 {cameraButtons}
                             </div>
 
-                            {/* //TODO "Select All"/"Select None" buttons */}
+                            <div className="d-flex justify-content-center mt-3">
+                                <div className="btn-group">
+                                    <button className="btn btn-light border" onClick={() => selectAllCameras(true)}>Select All</button>
+                                    <button className="btn btn-light border" onClick={() => selectAllCameras(false)}>Select None</button>
+                                </div>
+                            </div>
 
                             <p className="my-3">Showing {shownPhotos.length} out of {photoData.length} photos</p>
                         </> :
