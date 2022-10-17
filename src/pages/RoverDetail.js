@@ -115,7 +115,7 @@ export default function RoverSelect(props){
     }
 
     function selectAllCameras(setting){
-        if (setting == true || setting == false){
+        if (setting === true || setting === false){
             setCameras(prevState => prevState.map(c => (
                 {
                     ...c,
