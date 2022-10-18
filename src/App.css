@@ -127,4 +127,22 @@ main{
     #zoom-window img{
         height: 80%;
         align-self: center;
+        margin-top: 10%;
+    }
+    #zoom-window i{
+        position: absolute;
+        cursor: pointer;
+    }
+
+    .zoom-window--arrow-left{
+        top: 43%;
+        left: 1%;
+    }
+    .zoom-window--arrow-right{
+        top: 43%;
+        right: 1%;
+    }
+    .zoom-window--close{
+        top: 8%;
+        right: 1%;
     }

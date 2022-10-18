@@ -127,6 +127,10 @@ export default function RoverSelect(props){
             console.log("ERROR, selectAllCameras missing parameter")
     }
 
+    function handleChangePicture(value){
+        //Value should be +/- 1
+        setCurrentFocusIndex(prevIndex => (prevIndex + value))
+    }
 
 
 
@@ -210,12 +214,27 @@ export default function RoverSelect(props){
                     </div>
                 
                     {(shownPhotos.length && showZoom) ? 
-                        <div id="zoom-window" onClick={() => setShowZoom(false)}>
-                            <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
+                        <div id="zoom-window">
+                            <div className="position-relative">
+                                <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
+                                <i 
+                                    class="ri-close-fill ri-3x zoom-window--close" 
+                                    onClick={() => setShowZoom(false)}    
+                                />
+                                <i 
+                                    class="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
+                                    onClick={() => handleChangePicture(-1)}
+                                />
+                                <i 
+                                    class="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
+                                    onClick={() => handleChangePicture(1)}
+                                />
+                            </div>
                         </div> :
                         <></>
                     }
-                    {/* //TODO: Add arrows to cycle through photos */}
+                    {/* //TODO: Close window by pressing ESC */}
+                    {/* //TODO: Close window by clicking outside #zoom-window */}
 
                     {returnToTopButton}
                 </div>
