@@ -129,7 +129,16 @@ export default function RoverSelect(props){
 
     function handleChangePicture(value){
         //Value should be +/- 1
-        setCurrentFocusIndex(prevIndex => (prevIndex + value))
+        setCurrentFocusIndex(prevIndex => {
+            let newValue = parseInt(prevIndex) + parseInt(value)
+
+            if (newValue < 0)
+                return 0
+            else if (newValue >= shownPhotos.length)
+                return shownPhotos.length-1
+            else
+                return newValue
+        })
     }
 
 
@@ -218,15 +227,15 @@ export default function RoverSelect(props){
                             <div className="position-relative">
                                 <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
                                 <i 
-                                    class="ri-close-fill ri-3x zoom-window--close" 
+                                    className="ri-close-fill ri-3x zoom-window--close" 
                                     onClick={() => setShowZoom(false)}    
                                 />
                                 <i 
-                                    class="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
+                                    className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
                                     onClick={() => handleChangePicture(-1)}
                                 />
                                 <i 
-                                    class="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
+                                    className="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
                                     onClick={() => handleChangePicture(1)}
                                 />
                             </div>
