@@ -248,14 +248,21 @@ export default function RoverSelect(props){
                                     className="ri-close-fill ri-3x zoom-window--close" 
                                     onClick={() => setShowZoom(false)}    
                                 />
-                                <i 
-                                    className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
-                                    onClick={() => handleChangePicture(-1)}
-                                />
-                                <i 
+                                {currentFocusIndex != 0 ?
+                                    <i 
+                                        className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
+                                        onClick={() => handleChangePicture(-1)}
+                                    /> :
+                                    <></>
+                                }
+                                {currentFocusIndex != shownPhotos.length-1 ?
+                                    <i 
                                     className="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
                                     onClick={() => handleChangePicture(1)}
-                                />
+                                    /> :
+                                    <></>
+                                }
+                                
                             </div>
                         </div> :
                         <></>
@@ -263,7 +270,6 @@ export default function RoverSelect(props){
 
                     {returnToTopButton}
                 </div>
-                //TODO: Pagination?
                 
                 
                 
