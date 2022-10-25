@@ -36,6 +36,11 @@ export default function RoverSelect(props){
         setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
     }, [cameras])
 
+    React.useEffect(() => {
+        document.addEventListener('keydown', keyPress)
+        return () => document.removeEventListener('keydown', keyPress)
+    }, [keyPress])
+
     const cameraButtons = cameras.map(c => {        
         return (
             <CameraButton 
@@ -141,6 +146,19 @@ export default function RoverSelect(props){
         })
     }
 
+    function keyPress(event){
+        if (showZoom){
+            switch (event.key){
+                case 'ArrowLeft': handleChangePicture(-1); break;
+                case 'ArrowRight': handleChangePicture(1); break;
+                case 'Escape': setShowZoom(false); break;
+            }
+        }
+    }
+
+
+
+
 
 
 
@@ -242,8 +260,6 @@ export default function RoverSelect(props){
                         </div> :
                         <></>
                     }
-                    {/* //TODO: Close window by pressing ESC */}
-                    {/* //TODO: Close window by clicking outside #zoom-window */}
 
                     {returnToTopButton}
                 </div>
