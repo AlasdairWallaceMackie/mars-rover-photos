@@ -236,7 +236,7 @@ export default function RoverSelect(props){
                         <></>
                     }
 
-                    <div className="container-fluid d-flex flex-wrap">
+                    <div className="container-fluid d-flex flex-wrap justify-content-center">
                         {photoDataElements}
                     </div>
                 
