@@ -21,6 +21,11 @@ export default function RoverSelect(props){
     const [firstFetch, setFirstFetch] = React.useState(false)
 
     React.useEffect(() => {
+        setPhotoData([])
+        setFirstFetch(false)
+    }, [name])
+
+    React.useEffect(() => {
         setCameras(rover.cameras.map(c => {
             const hasPhotos = photoData.find(photo => photo.camera.name === c.name) ? true : false
             
@@ -172,7 +177,7 @@ export default function RoverSelect(props){
                         <span className="fs-2 mt-3">Back</span>
                     </Link>
 
-                    <h1 className="rover-title mb-4">{rover.name}</h1>
+                    <h1 className="rover-title mb-4 mt-5 mt-md-0">{rover.name}</h1>
 
                     <RoverNav
                         roverData={roverData}
