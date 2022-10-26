@@ -158,6 +158,7 @@ export default function RoverSelect(props){
                 case 'ArrowLeft': handleChangePicture(-1); break;
                 case 'ArrowRight': handleChangePicture(1); break;
                 case 'Escape': setShowZoom(false); break;
+                default: break;
             }
         }
     }
