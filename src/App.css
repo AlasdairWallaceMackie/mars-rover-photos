@@ -146,3 +146,9 @@ main{
         top: 8%;
         right: 1%;
     }
+
+#rover-nav{
+    position: absolute;
+    top: 35px;
+    right: 25px;
+}

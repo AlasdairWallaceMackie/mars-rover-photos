@@ -4,6 +4,7 @@ import {nanoid} from "nanoid"
 
 import {RoverContext} from "../data/roverContext"
 import RoverPhoto from "../components/RoverPhoto"
+import RoverNav from "../components/RoverNav"
 import CameraButton from "../components/CameraButton"
 
 export default function RoverSelect(props){
@@ -172,6 +173,11 @@ export default function RoverSelect(props){
                     </Link>
 
                     <h1 className="rover-title mb-4">{rover.name}</h1>
+
+                    <RoverNav
+                        roverData={roverData}
+                        currentRover={name}
+                    />
 
                     <table className="table text-light">
                         <tbody>
