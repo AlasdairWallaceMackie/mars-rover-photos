@@ -2,8 +2,6 @@ import React from "react"
 import {Link} from "react-router-dom"
 import {nanoid} from "nanoid"
 
-import {RoverContext} from "../data/roverContext"
-
 export default function RoverNav(props){
 
     const roverLinkElements = props.roverData.rovers.map(rover => (
@@ -17,9 +15,9 @@ export default function RoverNav(props){
 
     return (
         <div id="rover-nav" className="dropdown">
-            <a className="btn btn-lg btn-secondary dropdown-toggle" href="#" id="dropdownMenuLink" data-bs-toggle="dropdown">
+            <button className="btn btn-lg btn-secondary dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown">
                 Rovers
-            </a>
+            </button>
 
             <ul className="dropdown-menu">
                 {roverLinkElements}
