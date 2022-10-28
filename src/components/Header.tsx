@@ -1,9 +1,10 @@
 import React from "react"
 import FadeIn from "react-fade-in"
 
+
 import marsPhoto from "../img/mars.png"
 
-export default function Header(props){
+export default function Header(){
     return (
         <header className="pt-5 text-center">
             <FadeIn transitionDuration={1000}>

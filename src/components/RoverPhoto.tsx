@@ -1,6 +1,14 @@
 import React from "react"
 
-export default function RoverPhoto(props){
+import {Photo} from "../d"
+
+type Props = {
+    photo: Photo,
+    index: number,
+    handleClick: React.MouseEventHandler
+}
+
+export default function RoverPhoto(props: Props){
     const photo = props.photo
 
     return (

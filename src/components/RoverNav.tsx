@@ -2,7 +2,14 @@ import React from "react"
 import {Link} from "react-router-dom"
 import {nanoid} from "nanoid"
 
-export default function RoverNav(props){
+import {RoverData} from "../d"
+
+type Props = {
+    roverData: RoverData,
+    currentRover: string,
+}
+
+export default function RoverNav(props: Props){
 
     const roverLinkElements = props.roverData.rovers.map(rover => (
         <li key={nanoid()}><Link

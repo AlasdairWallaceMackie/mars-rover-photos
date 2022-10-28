@@ -2,24 +2,36 @@ import React from "react"
 import {Link} from "react-router-dom"
 
 import roverProfileImageData from "../data/roverProfileImages"
+import {Rover} from "../d"
 
-export default function RoverProfile(props){
+type StyleClasses = {
+    "active": string,
+    "complete": string,
+    "unknown": string,
+}
+type Props = {
+    name: string,
+    img: string,
+    rover: Rover,
+}
+
+export default function RoverProfile(props: Props){
     const roverStatus = props.rover.status
-    
-    const statusIndicatorClasses = {
+
+    const statusIndicatorClasses: StyleClasses = {
         "active": "spinner-grow spinner-grow-sm mt-2",
         "complete": "ri-checkbox-blank-circle-fill ri-xs mt-1",
         "unknown": "ri-checkbox-blank-circle-fill ri-xs mt-1",
     }
-    const statusColorClass = {
+    const statusColorClass: StyleClasses = {
         "active": "text-success-bright",
         "complete": "text-danger",
         "unknown": "text-warning",
     }
 
     const statusIndicatorElement = <>
-        <h3 className={`d-flex mt-2 justify-content-center ${statusColorClass[roverStatus]}`}>
-            <div className={statusIndicatorClasses[roverStatus]}></div>
+        <h3 className={`d-flex mt-2 justify-content-center ${statusColorClass[roverStatus as keyof StyleClasses]}`}>
+            <div className={statusIndicatorClasses[roverStatus as keyof StyleClasses]}></div>
             <span className="ms-2">Status: {roverStatus.toUpperCase()}</span>
         </h3>
     </>
@@ -33,7 +45,7 @@ export default function RoverProfile(props){
             <img src={props.img} className="rounded-3" alt={props.name} ></img>
 
             {statusIndicatorElement}
-            {roverStatus === "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
+            {roverStatus === "complete" && <h4><>Last Contact: {props.rover.max_date}</></h4>}
             {roverStatus === "active" && <h4>Martian Days: {props.rover.max_sol}</h4>}
         </Link>
     )
