@@ -5,9 +5,10 @@ import roverProfileImageData from "../data/roverProfileImages"
 
 import Rover from "./RoverProfile"
 
+import {ContextInterface} from "../d"
 
-export default function RoverSelect(props){
-    const {roverData} = React.useContext(RoverContext)
+export default function RoverSelect(){
+    const {roverData} = React.useContext<ContextInterface>(RoverContext)
     const roverElements = roverData.rovers.map(rover => (
         <Rover 
             key={rover.id}

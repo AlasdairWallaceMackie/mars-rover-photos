@@ -1,9 +1,15 @@
 import React from "react"
 
-const RoverContext = React.createContext()
+import {ContextInterface, RoverData} from "../d"
 
-function RoverContextProvider(props){
-    const [roverData, setRoverData] = React.useState([])
+type Props = {
+    children: React.ReactNode
+}
+
+const RoverContext = React.createContext<ContextInterface>({roverData: {rovers: []}})
+
+function RoverContextProvider(props: Props){
+    const [roverData, setRoverData] = React.useState<RoverData>({rovers: []})
 
     React.useEffect(() => {
         fetch("https://mars-photos.herokuapp.com/api/v1/rovers/")

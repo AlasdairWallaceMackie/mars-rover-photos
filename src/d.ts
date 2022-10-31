@@ -1,3 +1,7 @@
+export interface ContextInterface {
+    roverData: RoverData
+}
+
 export interface RoverData{
     rovers: Array<Rover>
 }
@@ -12,6 +16,11 @@ export interface Rover{
     name: string,
     status: string,
     total_photos: number,
+}
+
+export interface ImageData {
+    [key: string]: string,
+    default: string
 }
 
 export interface CameraData{

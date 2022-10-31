@@ -4,7 +4,9 @@ import curiosity from "../img/rovers/curiosity.jpg"
 import perseverance from "../img/rovers/perseverance.jpg"
 import default_image from "../img/rovers/default.jpg" 
 
-const roverProfileImageData = {
+import {ImageData} from "../d"
+
+const roverProfileImageData: ImageData = {
     "Opportunity": opportunity,
     "Spirit": spirit,
     "Curiosity": curiosity,
