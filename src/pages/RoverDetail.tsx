@@ -1,4 +1,4 @@
-import React from "react"
+import React, { SyntheticEvent } from "react"
 import {Link, useParams} from "react-router-dom"
 import {nanoid} from "nanoid"
 
@@ -7,18 +7,25 @@ import RoverPhoto from "../components/RoverPhoto"
 import RoverNav from "../components/RoverNav"
 import CameraButton from "../components/CameraButton"
 
-export default function RoverSelect(props){
-    const {roverData} = React.useContext(RoverContext)
-    const {name} = useParams()
-    const rover = roverData.rovers.find(r => r.name.toLowerCase() === name)
+import {Rover, Photo, ContextInterface, Camera} from "../d"
 
-    const [earthDate, setEarthDate] = React.useState("")
-    const [photoData, setPhotoData] = React.useState([])
-    const [shownPhotos, setShownPhotos] = React.useState([])
-    const [currentFocusIndex, setCurrentFocusIndex] = React.useState(0)
-    const [showZoom, setShowZoom] = React.useState(false)
-    const [cameras, setCameras] = React.useState([])
-    const [firstFetch, setFirstFetch] = React.useState(false)
+interface EventInterface extends SyntheticEvent{
+    dataset?: any,
+    key?: string,
+}
+
+export default function RoverSelect(){
+    const {roverData} = React.useContext<ContextInterface>(RoverContext)
+    const {name} = useParams<string>()
+    const rover: Rover = roverData.rovers.find(r => r.name.toLowerCase() === name)!
+
+    const [earthDate, setEarthDate] = React.useState<Date | string>("")
+    const [photoData, setPhotoData] = React.useState<Photo[]>([])
+    const [shownPhotos, setShownPhotos] = React.useState<Photo[]>([])
+    const [currentFocusIndex, setCurrentFocusIndex] = React.useState<number>(0)
+    const [showZoom, setShowZoom] = React.useState<boolean>(false)
+    const [cameras, setCameras] = React.useState<Camera[]>([])
+    const [firstFetch, setFirstFetch] = React.useState<boolean>(false)
 
     React.useEffect(() => {
         setPhotoData([])
@@ -33,7 +40,7 @@ export default function RoverSelect(props){
                 cameraObj: c,
                 disabled: !hasPhotos,
                 selected: false,
-            }
+            } as Camera
         }))
     }, [photoData])
 
@@ -59,7 +66,7 @@ export default function RoverSelect(props){
         )
     })
     
-    let photoDataElements = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
+    let photoDataElements: React.ReactElement[] | JSX.Element = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
 
     if (photoData.length){
         photoDataElements = shownPhotos.map((photo, index) => (
@@ -83,8 +90,9 @@ export default function RoverSelect(props){
 
 
 
-    function handleCameraSelect(event){
-        const value = event.target.value
+    function handleCameraSelect(event: EventInterface){
+        const target = event.target as HTMLInputElement
+        const value = target.value
 
         setCameras(cameras.map(camera => {
             const hasPhotos = photoData.find(photo => photo.camera.name === camera.cameraObj.name) ? true : false
@@ -93,15 +101,16 @@ export default function RoverSelect(props){
                 ...camera,
                 disabled: !hasPhotos,
                 selected: camera.cameraObj.name === value ? !camera.selected : camera.selected,
-            }
+            } as Camera
         }))
     }
 
-    function handleChangeEarthDate(event){
-        setEarthDate(event.target.value)
+    function handleChangeEarthDate(event: EventInterface){
+        const target = event.target as HTMLInputElement
+        setEarthDate(target.value)
     }
 
-    function handleSubmit(event){
+    function handleSubmit(event: SyntheticEvent){
         event.preventDefault()
 
         fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${earthDate}`)
@@ -111,37 +120,33 @@ export default function RoverSelect(props){
         setFirstFetch(true)
     }
 
-    function handlePhotoClick(event){
-        const newIndex = event.target.dataset.index
+    function handlePhotoClick(event: EventInterface){
+        const target = event.target as HTMLElement
+        const newIndex = target.dataset.index as unknown as number
         setCurrentFocusIndex(newIndex)
         setShowZoom(true)
     }
 
     function handleMostRecentDayClick(){
-        let input = document.getElementById("earth-date")
-        let maxDate = input.getAttribute("max")
+        let input = document.getElementById("earth-date") as HTMLInputElement
+        let maxDate = input!.getAttribute("max") as string
 
         input.value = maxDate
         setEarthDate(maxDate)
     }
 
-    function selectAllCameras(setting){
-        if (setting === true || setting === false){
-            setCameras(prevState => prevState.map(c => (
-                {
-                    ...c,
-                    selected: c.disabled ? false : setting
-                }
-            )))
-        }
-        else
-            console.log("ERROR, selectAllCameras missing parameter")
+    function selectAllCameras(setting: boolean){
+        setCameras(prevState => prevState.map(c => (
+            {
+                ...c,
+                selected: c.disabled ? false : setting
+            } as Camera
+        )))
     }
 
-    function handleChangePicture(value){
-        //Value should be +/- 1
+    function handleChangePicture(value: -1|1){
         setCurrentFocusIndex(prevIndex => {
-            let newValue = parseInt(prevIndex) + parseInt(value)
+            let newValue = parseInt(prevIndex.toString()) + parseInt(value.toString())
 
             if (newValue < 0)
                 return 0
@@ -152,7 +157,7 @@ export default function RoverSelect(props){
         })
     }
 
-    function keyPress(event){
+    function keyPress(event: KeyboardEvent){
         if (showZoom){
             switch (event.key){
                 case 'ArrowLeft': handleChangePicture(-1); break;
@@ -182,7 +187,7 @@ export default function RoverSelect(props){
 
                     <RoverNav
                         roverData={roverData}
-                        currentRover={name}
+                        currentRover={name!}
                     />
 
                     <table className="table text-light">
@@ -213,7 +218,7 @@ export default function RoverSelect(props){
 
                         <div className="d-flex mb-5 col-8 col-md-6 flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-none">
                             <div className="input-group me-3 mb-3 mb-sm-0">
-                                <span className="input-group-text" htmlFor="earth-date">Earth Date</span>
+                                <label className="input-group-text" htmlFor="earth-date">Earth Date</label>
                                 <input
                                     id="earth-date"
                                     type="date"
