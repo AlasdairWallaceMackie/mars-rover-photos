@@ -13,9 +13,9 @@ export default function App(){
         roverData.rovers ? 
             <main className="p-4 bg-space text-light">
                     <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route exact path="/rovers/" element={ <Navigate to="/" /> } />
-                        <Route exact path="/rovers/:name" element={<RoverDetail />}/>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/rovers/" element={<Navigate to="/" />} />
+                        <Route path="/rovers/:name" element={<RoverDetail />}/>
                     </Routes>
             </main> :
             <div className="loading-screen bg-space">
