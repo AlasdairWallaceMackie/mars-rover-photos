@@ -42,12 +42,12 @@ export default function RoverSelect(){
                 selected: false,
             } as Camera
         }))
-    }, [photoData])
+    }, [photoData, rover.cameras])
 
     React.useEffect(() => {
         let cameraNames = cameras.map(camera => camera.selected ? camera.cameraObj.name : "")        
         setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
-    }, [cameras])
+    }, [cameras, photoData])
 
     React.useEffect(() => {
         document.addEventListener('keydown', keyPress)
