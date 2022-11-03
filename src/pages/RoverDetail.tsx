@@ -14,7 +14,7 @@ interface EventInterface extends SyntheticEvent{
     key?: string,
 }
 
-export default function RoverSelect(){
+export default function RoverDetail(){
     const {roverData} = React.useContext<ContextInterface>(RoverContext)
     const {name} = useParams<string>()
     const rover: Rover = roverData.rovers.find(r => r.name.toLowerCase() === name)!
