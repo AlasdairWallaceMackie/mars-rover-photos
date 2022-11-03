@@ -1,11 +1,23 @@
-# Mars Rover Photos
-#### *A work in progress*
+# **Mars Rover Photos**
 
-### Made with React, React Router, and Styled Components
+### Made with React, React Router, and TypeScript
 
-### Data pulled from NASA's official [API](https://api.nasa.gov/index.html)
-<hr>
+### Data pulled from NASA's [official API](https://mars-photos.herokuapp.com/)
 
 <br>
+<br>
 
-<img src="./screenshots/title.png" />
+# **Choose from past and present rovers**
+<img width=700 src="./screenshots/home.gif" />
+
+<br>
+<br>
+
+# **View photos from any available date, from any camera**
+<img width=700 src="./screenshots/rover-detail.png" />
+
+<br>
+<br>
+
+# **Take a closer look!**
+<img width=700 src="./screenshots/picture-interaction.gif" />
