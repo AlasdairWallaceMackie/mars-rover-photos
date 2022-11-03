@@ -9,9 +9,9 @@ export interface RoverData{
 export interface Rover{
     cameras: Array<CameraData>,
     id: number,
-    landing_date: Date,
-    launch_date: Date,
-    max_date: Date,
+    landing_date: string,
+    launch_date: string,
+    max_date: string,
     max_sol: number,
     name: string,
     status: string,
@@ -31,9 +31,9 @@ export interface CameraData{
 }
 
 export interface Camera{
-    cameraObj: CameraData,
     disabled: boolean,
     selected: false,
+    cameraObj: CameraData,
 }
 
 export interface Photo{
