@@ -1,4 +1,4 @@
-MOCK_API_DATA = {
+const MOCK_API_DATA = {
     "rovers":[
         {
             "id":5,
