@@ -27,22 +27,48 @@ export default function RoverDetail(){
     const [cameras, setCameras] = React.useState<Camera[]>([])
     const [firstFetch, setFirstFetch] = React.useState<boolean>(false)
 
+    const [loaded, setLoaded] = React.useState<boolean>(false)
+    const [notLoadedElement, setNotLoadedElement] = React.useState(
+        <div className="loading-screen bg-space">
+            <div className="spinner-border text-light" role="status"></div>
+        </div>
+    )
+
+    React.useEffect(() => {
+        if (loaded === false){
+            const timer = setTimeout(() => {
+                setNotLoadedElement(
+                    <div className="text-center">
+                        <h1>API Request Timeout: Rover Data Not Found</h1>
+                        <Link to="/"><button className="btn btn-secondary">Back to Home</button></Link>
+                    </div>
+                )
+                setLoaded(false)
+            }, 3000)
+            return () => clearTimeout(timer)
+        }
+    }, [loaded])
+
     React.useEffect(() => {
         setPhotoData([])
         setFirstFetch(false)
     }, [name])
 
     React.useEffect(() => {
-        setCameras(rover.cameras.map(c => {
-            const hasPhotos = photoData.find(photo => photo.camera.name === c.name) ? true : false
-            
-            return {
-                cameraObj: c,
-                disabled: !hasPhotos,
-                selected: false,
-            } as Camera
-        }))
-    }, [photoData, rover.cameras])
+        if (rover && "cameras" in rover){
+            setLoaded(true)
+
+            setCameras(rover.cameras.map(c => {
+                const hasPhotos = photoData.find(photo => photo.camera.name === c.name) ? true : false
+                
+                return {
+                    cameraObj: c,
+                    disabled: !hasPhotos,
+                    selected: false,
+                } as Camera
+            }))
+        }
+    }, [photoData, rover])
 
     React.useEffect(() => {
         let cameraNames = cameras.map(camera => camera.selected ? camera.cameraObj.name : "")        
@@ -176,7 +202,7 @@ export default function RoverDetail(){
 
     return (
         <div className="full-height">
-            {rover ? 
+            {loaded ? 
                 <div id="rover-detail" className="py-3 position-relative">
                     <Link to="/" className="animated-arrow animated-arrow-left position-absolute d-flex">
                         <i className="ri-arrow-left-s-line ri-3x" />
@@ -288,14 +314,8 @@ export default function RoverDetail(){
                     {returnToTopButton}
                 </div>
                 
+                :<>{notLoadedElement}</>
                 
-                
-                
-                
-                :<div>
-                    <h1>Rover Data Not Found</h1>
-                    <Link to="/"><button className="btn btn-secondary">Back to Home</button></Link>
-                </div>
             }
         </div>
     )
