@@ -10,7 +10,7 @@ export default function App(){
     const {roverData} = React.useContext(RoverContext)
 
     return (
-        roverData.rovers ? 
+        roverData ? 
             <main className="p-4 bg-space text-light">
                     <Routes>
                         <Route path="/" element={<Home />} />
