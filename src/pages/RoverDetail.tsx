@@ -34,6 +34,40 @@ export default function RoverDetail(){
         </div>
     )
 
+    const cameraButtons = cameras.map(c => {        
+        return (
+            <CameraButton 
+                key={nanoid()}
+                camera={c.cameraObj}
+                handleCameraSelect={handleCameraSelect}
+                disabled={c.disabled}
+                selected={c.selected}
+            />
+        )
+    })
+    
+    let photoDataElements: React.ReactElement[] | JSX.Element = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
+
+    if (photoData.length){
+        photoDataElements = shownPhotos.map((photo, index) => (
+            <RoverPhoto 
+                key={photo.id}
+                photo={photo}
+                index={index}
+                handleClick={handlePhotoClick}
+            />
+        ))
+    }
+
+    const returnToTopButton = shownPhotos.length ? 
+        <a href="#rover-detail" className="d-flex justify-content-center text-decoration-none my-5">
+            <button className="btn btn-lg btn-light">Return to Top</button>
+        </a> :
+        <></>
+
+
+
+
     React.useEffect(() => {
         if (loaded === false){
             const timer = setTimeout(() => {
@@ -75,41 +109,40 @@ export default function RoverDetail(){
         setShownPhotos(photoData.filter(photo => cameraNames.includes(photo.camera.name)))
     }, [cameras, photoData])
 
+
+
+
+
+    const handleChangePicture = React.useCallback((value: -1|1) => {
+        setCurrentFocusIndex(prevIndex => {
+            let newValue = parseInt(prevIndex.toString()) + parseInt(value.toString())
+
+            if (newValue < 0)
+                return 0
+            else if (newValue >= shownPhotos.length)
+                return shownPhotos.length-1
+            else
+                return newValue
+        })
+    }, [shownPhotos.length])
+
     React.useEffect(() => {
         document.addEventListener('keydown', keyPress)
         return () => document.removeEventListener('keydown', keyPress)
-    }, [keyPress])
 
-    const cameraButtons = cameras.map(c => {        
-        return (
-            <CameraButton 
-                key={nanoid()}
-                camera={c.cameraObj}
-                handleCameraSelect={handleCameraSelect}
-                disabled={c.disabled}
-                selected={c.selected}
-            />
-        )
-    })
-    
-    let photoDataElements: React.ReactElement[] | JSX.Element = firstFetch ? <h2>No photos found for that date</h2> : <h2>Select an Earth date to get photographs</h2>
+        function keyPress(event: KeyboardEvent){
+            if (showZoom){
+                switch (event.key){
+                    case 'ArrowLeft': handleChangePicture(-1); break;
+                    case 'ArrowRight': handleChangePicture(1); break;
+                    case 'Escape': setShowZoom(false); break;
+                    default: break;
+                }
+            }
+        }
+    }, [handleChangePicture, showZoom])
 
-    if (photoData.length){
-        photoDataElements = shownPhotos.map((photo, index) => (
-            <RoverPhoto 
-                key={photo.id}
-                photo={photo}
-                index={index}
-                handleClick={handlePhotoClick}
-            />
-        ))
-    }
 
-    const returnToTopButton = shownPhotos.length ? 
-        <a href="#rover-detail" className="d-flex justify-content-center text-decoration-none my-5">
-            <button className="btn btn-lg btn-light">Return to Top</button>
-        </a> :
-        <></>
 
 
 
@@ -170,29 +203,6 @@ export default function RoverDetail(){
         )))
     }
 
-    function handleChangePicture(value: -1|1){
-        setCurrentFocusIndex(prevIndex => {
-            let newValue = parseInt(prevIndex.toString()) + parseInt(value.toString())
-
-            if (newValue < 0)
-                return 0
-            else if (newValue >= shownPhotos.length)
-                return shownPhotos.length-1
-            else
-                return newValue
-        })
-    }
-
-    function keyPress(event: KeyboardEvent){
-        if (showZoom){
-            switch (event.key){
-                case 'ArrowLeft': handleChangePicture(-1); break;
-                case 'ArrowRight': handleChangePicture(1); break;
-                case 'Escape': setShowZoom(false); break;
-                default: break;
-            }
-        }
-    }
 
 
 
