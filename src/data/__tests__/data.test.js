@@ -5,6 +5,6 @@ import RoverSelect from "../../components/RoverSelect"
 import MOCK_API_DATA from "../mockApiData"
 
 
-it('should read local mock API data', () => {
+it('should import local mock API data', () => {
     expect(MOCK_API_DATA.rovers.length).toEqual(4)
 })
