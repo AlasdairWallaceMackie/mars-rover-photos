@@ -19,7 +19,7 @@ export default function RoverDetail(){
     const {name} = useParams<string>()
     const rover: Rover = roverData.rovers.find(r => r.name.toLowerCase() === name)!
 
-    const [earthDate, setEarthDate] = React.useState<Date | string>("")
+    const [earthDate, setEarthDate] = React.useState<Date>(new Date())
     const [photoData, setPhotoData] = React.useState<Photo[]>([])
     const [shownPhotos, setShownPhotos] = React.useState<Photo[]>([])
     const [currentFocusIndex, setCurrentFocusIndex] = React.useState<number>(0)
@@ -166,13 +166,28 @@ export default function RoverDetail(){
 
     function handleChangeEarthDate(event: EventInterface){
         const target = event.target as HTMLInputElement
-        setEarthDate(target.value)
+        let newDate = new Date(target.value)
+        setEarthDate(newDate)
     }
 
-    function handleSubmit(event: SyntheticEvent){
-        event.preventDefault()
+    function handleChangeEarthDateInterval(value: 1 | -1){        
+        let newDate = new Date()
+        newDate.setDate(earthDate.getDate() + value)
 
-        fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${earthDate}`)
+        let input = document.getElementById("earth-date") as HTMLInputElement
+        input.value = parseDateFormat(newDate)
+
+        setEarthDate(newDate)
+        handleSubmit()
+    }
+
+    console.log(earthDate)
+
+    function handleSubmit(event?: SyntheticEvent){
+        if (event)
+            event.preventDefault()
+
+        fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(earthDate)}`)
             .then(response => response.json())
             .then(data => setPhotoData(data.photos))
         
@@ -191,7 +206,7 @@ export default function RoverDetail(){
         let maxDate = input!.getAttribute("max") as string
 
         input.value = maxDate
-        setEarthDate(maxDate)
+        setEarthDate(new Date(maxDate))
     }
 
     function selectAllCameras(setting: boolean){
@@ -205,6 +220,15 @@ export default function RoverDetail(){
 
 
 
+
+
+    function parseDateFormat(date: Date){
+        let year = date.getFullYear()
+        let month = date.getMonth()
+        let day = date.getDay()
+
+        return `${year}-${month <= 9 ? "0" : ""}${month}-${day <= 9 ? "0" : ""}${day}`
+    }
 
 
 
@@ -272,6 +296,12 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
+                            <div className="d-flex justify-content-center mb-4">
+                                <div className="btn-group">
+                                    <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(-1)}>Prev Day</button>
+                                    <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(1)}>Next Day</button>
+                                </div>
+                            </div>
                             <h2 className="text-center">CAMERAS</h2>
                             <div className="btn-group d-flex flex-wrap">
                                 {cameraButtons}
@@ -301,14 +331,14 @@ export default function RoverDetail(){
                                         className="ri-close-fill ri-3x zoom-window--close" 
                                         onClick={() => setShowZoom(false)}    
                                     />
-                                    {currentFocusIndex != 0 ?
+                                    {currentFocusIndex !== 0 ?
                                         <i 
                                             className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
                                             onClick={() => handleChangePicture(-1)}
                                         /> :
                                         <></>
                                     }
-                                    {currentFocusIndex != shownPhotos.length-1 ?
+                                    {currentFocusIndex !== shownPhotos.length-1 ?
                                         <i 
                                         className="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
                                         onClick={() => handleChangePicture(1)}
