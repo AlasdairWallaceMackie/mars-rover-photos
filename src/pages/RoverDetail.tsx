@@ -66,6 +66,8 @@ export default function RoverDetail(){
         <></>
 
 
+    // console.log(roverData)
+    // console.log(photoData)
 
 
     React.useEffect(() => {
@@ -166,6 +168,7 @@ export default function RoverDetail(){
 
     function handleChangeEarthDate(event: EventInterface){
         const target = event.target as HTMLInputElement
+        console.log("TARGET VALUE: " + target.value)
         let newDate = new Date(target.value)
         setEarthDate(newDate)
     }
@@ -181,11 +184,14 @@ export default function RoverDetail(){
         handleSubmit()
     }
 
-    console.log(earthDate)
-
     function handleSubmit(event?: SyntheticEvent){
         if (event)
             event.preventDefault()
+
+
+        // console.log("Earth Date:" + earthDate)
+        // console.log("FETCH FROM:")
+        // console.log(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(earthDate)}`)
 
         fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(earthDate)}`)
             .then(response => response.json())
@@ -224,8 +230,8 @@ export default function RoverDetail(){
 
     function parseDateFormat(date: Date){
         let year = date.getFullYear()
-        let month = date.getMonth()
-        let day = date.getDay()
+        let month = date.getMonth() + 1
+        let day = date.getDate()
 
         return `${year}-${month <= 9 ? "0" : ""}${month}-${day <= 9 ? "0" : ""}${day}`
     }
@@ -296,6 +302,7 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
+                            <h3 className="text-center">{earthDate.toDateString()}</h3>
                             <div className="d-flex justify-content-center mb-4">
                                 <div className="btn-group">
                                     <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(-1)}>Prev Day</button>
