@@ -19,6 +19,7 @@ export default function RoverPhoto(props: Props){
                 data-index={props.index}
                 onClick={props.handleClick}
             />
+            {/* <p>{photo.earth_date.toString()}</p> */}
         </div>
     )
 }
