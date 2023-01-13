@@ -113,6 +113,17 @@ main{
         transform: scale(1.2);
     }
 
+.return-to-top-button{
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    text-decoration: none;
+    color: black;
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+}
+
 #zoom-window{
     position: fixed;
     width: 100%;

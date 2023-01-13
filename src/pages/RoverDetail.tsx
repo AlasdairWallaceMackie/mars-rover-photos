@@ -60,8 +60,9 @@ export default function RoverDetail(){
     }
 
     const returnToTopButton = shownPhotos.length ? 
-        <a href="#rover-detail" className="d-flex justify-content-center text-decoration-none my-5">
-            <button className="btn btn-lg btn-light">Return to Top</button>
+        <a href="#rover-detail" className="return-to-top-button bg-light">
+            {/* <i className="ri-arrow-up-s-line ri-3x"></i> */}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48"><path fill="none" d="M0 0h24v24H0z"/><path d="M12 10.828l-4.95 4.95-1.414-1.414L12 8l6.364 6.364-1.414 1.414z"/></svg>
         </a> :
         <></>
 
