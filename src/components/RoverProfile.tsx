@@ -45,7 +45,7 @@ export default function RoverProfile(props: Props){
             <img src={props.img} className="rounded-3" alt={props.name} ></img>
 
             {statusIndicatorElement}
-            {roverStatus === "complete" && <h4><>Last Contact: {props.rover.max_date}</></h4>}
+            {roverStatus === "complete" && <h4>Last Contact: {props.rover.max_date}</h4>}
             {roverStatus === "active" && <h4>Martian Days: {props.rover.max_sol}</h4>}
         </Link>
     )
