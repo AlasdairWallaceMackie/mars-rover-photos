@@ -175,8 +175,8 @@ export default function RoverDetail(){
     }
 
     function handleChangeEarthDateInterval(value: 1 | -1){        
-        let newDate = new Date()
-        newDate.setDate(earthDate.getDate() + value)
+        let newDate = new Date(earthDate.getFullYear(), earthDate.getMonth(), earthDate.getUTCDate())
+        newDate.setDate(newDate.getUTCDate() + value)
 
         let input = document.getElementById("earth-date") as HTMLInputElement
         input.value = parseDateFormat(newDate)
@@ -232,7 +232,7 @@ export default function RoverDetail(){
     function parseDateFormat(date: Date){
         let year = date.getFullYear()
         let month = date.getMonth() + 1
-        let day = date.getDate()
+        let day = date.getUTCDate()
 
         return `${year}-${month <= 9 ? "0" : ""}${month}-${day <= 9 ? "0" : ""}${day}`
     }
@@ -303,7 +303,7 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
-                            <h3 className="text-center">{earthDate.toDateString()}</h3>
+                            <h3 className="text-center">{earthDate.toUTCString()}</h3>
                             <div className="d-flex justify-content-center mb-4">
                                 <div className="btn-group">
                                     <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(-1)}>Prev Day</button>
