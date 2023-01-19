@@ -353,6 +353,27 @@ export default function RoverDetail(){
                                         /> :
                                         <></>
                                     }
+                                    <div className="dropdown zoom-window--info-dropdown">
+                                        <i className="dropdown-toggle ri-information-fill ri-3x" data-bs-toggle="dropdown"></i>
+                                        <div className="dropdown-menu p-3">
+                                            <table>
+                                                <tbody>
+                                                    <tr className="border-bottom">
+                                                        <td>CAMERA</td>
+                                                        <td>{shownPhotos[currentFocusIndex].camera.full_name}</td>
+                                                    </tr>
+                                                    <tr className="border-bottom">
+                                                        <td>DATE</td>
+                                                        <td>{shownPhotos[currentFocusIndex].earth_date.toString()}</td>
+                                                    </tr>
+                                                    <tr className="border-bottom">
+                                                        <td className="pe-3">MARS DAY</td>
+                                                        <td>{shownPhotos[currentFocusIndex].sol}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                             </div>
                         </div> :
                         <></>
