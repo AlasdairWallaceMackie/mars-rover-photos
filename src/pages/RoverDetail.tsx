@@ -332,48 +332,48 @@ export default function RoverDetail(){
                     </div>
                 
                     {(shownPhotos.length && showZoom) ? 
-                        <div id="zoom-window">
-                            <div className="d-flex justify-content-center">
-                                    <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
+                        <div id="zoom-background" className="d-flex justify-content-center">
+                            <div id="zoom-window">
+                                <img src={shownPhotos[currentFocusIndex].img_src} alt="" />
+                                <i 
+                                    className="ri-close-fill ri-3x zoom-window--close" 
+                                    onClick={() => setShowZoom(false)}    
+                                />
+                                {currentFocusIndex !== 0 ?
                                     <i 
-                                        className="ri-close-fill ri-3x zoom-window--close" 
-                                        onClick={() => setShowZoom(false)}    
-                                    />
-                                    {currentFocusIndex !== 0 ?
-                                        <i 
-                                            className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
-                                            onClick={() => handleChangePicture(-1)}
-                                        /> :
-                                        <></>
-                                    }
-                                    {currentFocusIndex !== shownPhotos.length-1 ?
-                                        <i 
-                                        className="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
-                                        onClick={() => handleChangePicture(1)}
-                                        /> :
-                                        <></>
-                                    }
-                                    <div className="dropdown zoom-window--info-dropdown">
-                                        <i className="dropdown-toggle ri-information-fill ri-3x" data-bs-toggle="dropdown"></i>
-                                        <div className="dropdown-menu p-3">
-                                            <table>
-                                                <tbody>
-                                                    <tr className="border-bottom">
-                                                        <td>CAMERA</td>
-                                                        <td>{shownPhotos[currentFocusIndex].camera.full_name}</td>
-                                                    </tr>
-                                                    <tr className="border-bottom">
-                                                        <td>DATE</td>
-                                                        <td>{shownPhotos[currentFocusIndex].earth_date.toString()}</td>
-                                                    </tr>
-                                                    <tr className="border-bottom">
-                                                        <td className="pe-3">MARS DAY</td>
-                                                        <td>{shownPhotos[currentFocusIndex].sol}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        className="ri-arrow-left-s-line ri-3x zoom-window--arrow-left" 
+                                        onClick={() => handleChangePicture(-1)}
+                                    /> :
+                                    <></>
+                                }
+                                {currentFocusIndex !== shownPhotos.length-1 ?
+                                    <i 
+                                    className="ri-arrow-right-s-line ri-3x zoom-window--arrow-right" 
+                                    onClick={() => handleChangePicture(1)}
+                                    /> :
+                                    <></>
+                                }
+                                <div className="dropdown zoom-window--info-dropdown">
+                                    <i className="dropdown-toggle ri-information-fill ri-3x" data-bs-toggle="dropdown"></i>
+                                    <div className="dropdown-menu shadow p-3 text-nowrap">
+                                        <table>
+                                            <tbody>
+                                                <tr className="border-bottom">
+                                                    <td>CAMERA</td>
+                                                    <td>{shownPhotos[currentFocusIndex].camera.full_name}</td>
+                                                </tr>
+                                                <tr className="border-bottom">
+                                                    <td>EARTH DATE</td>
+                                                    <td>{shownPhotos[currentFocusIndex].earth_date.toString()}</td>
+                                                </tr>
+                                                <tr className="border-bottom">
+                                                    <td className="pe-4">MARS DAY</td>
+                                                    <td>{shownPhotos[currentFocusIndex].sol}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
                         </div> :
                         <></>
