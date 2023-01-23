@@ -174,7 +174,7 @@ export default function RoverDetail(){
         setEarthDate(newDate)
     }
 
-    function handleChangeEarthDateInterval(value: 1 | -1){        
+    function handleChangeEarthDateInterval(value: 1 | -1){
         let newDate = new Date(earthDate.getFullYear(), earthDate.getMonth(), earthDate.getUTCDate())
         newDate.setDate(newDate.getUTCDate() + value)
 
@@ -189,12 +189,14 @@ export default function RoverDetail(){
         if (event)
             event.preventDefault()
 
+        const input = document.getElementById("earth-date") as HTMLInputElement
+        const inputDate = new Date(input.value)
 
         // console.log("Earth Date:" + earthDate)
         // console.log("FETCH FROM:")
-        // console.log(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(earthDate)}`)
+        // console.log(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(inputDate)}`)
 
-        fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(earthDate)}`)
+        fetch(`https://mars-photos.herokuapp.com/api/v1/rovers/${rover.name}/photos?earth_date=${parseDateFormat(inputDate)}`)
             .then(response => response.json())
             .then(data => setPhotoData(data.photos))
         
