@@ -216,6 +216,7 @@ export default function RoverDetail(){
 
         input.value = maxDate
         setEarthDate(new Date(maxDate))
+        handleSubmit()
     }
 
     function selectAllCameras(setting: boolean){
