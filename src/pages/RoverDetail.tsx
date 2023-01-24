@@ -299,7 +299,7 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
-                            <h3 className="text-center">{earthDate.toUTCString()}</h3>
+                            <h2 className="text-center">{earthDate.toUTCString().split(' ').slice(0, 4).join(' ')}</h2>
                             <div className="d-flex justify-content-center mb-4">
                                 <div className="btn-group">
                                     <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(-1)}>Prev Day</button>
