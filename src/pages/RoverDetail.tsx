@@ -167,13 +167,6 @@ export default function RoverDetail(){
         }))
     }
 
-    function handleChangeEarthDate(event: EventInterface){
-        const target = event.target as HTMLInputElement
-        console.log("TARGET VALUE: " + target.value)
-        let newDate = new Date(target.value)
-        setEarthDate(newDate)
-    }
-
     function handleChangeEarthDateInterval(value: 1 | -1){
         let newDate = new Date(earthDate.getFullYear(), earthDate.getMonth(), earthDate.getUTCDate())
         newDate.setDate(newDate.getUTCDate() + value)
@@ -201,6 +194,7 @@ export default function RoverDetail(){
             .then(data => setPhotoData(data.photos))
         
         setFirstFetch(true)
+        setEarthDate(inputDate)
     }
 
     function handlePhotoClick(event: EventInterface){
@@ -294,7 +288,6 @@ export default function RoverDetail(){
                                     type="date"
                                     min={rover.launch_date}
                                     max={rover.max_date}
-                                    onChange={event => handleChangeEarthDate(event)}
                                     required={true}
                                     className="form-control"
                                 />
