@@ -177,3 +177,7 @@ main{
     top: 30px;
     right: 25px;
 }
+
+.bg-blur{
+    backdrop-filter: blur(2px);
+}

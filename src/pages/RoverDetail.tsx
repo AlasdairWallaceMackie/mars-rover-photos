@@ -300,7 +300,7 @@ export default function RoverDetail(){
                     {firstFetch ?
                         <>
                             <div className="d-flex justify-content-center mb-4">
-                                <div className="btn-group">
+                                <div className="btn-group bg-blur">
                                     <button className="btn btn-outline-light border" onClick={() => handleChangeEarthDateInterval(-1)}>
                                         <i className="ri-arrow-left-s-line align-bottom"></i>
                                         Prev Day
@@ -313,7 +313,7 @@ export default function RoverDetail(){
                                 </div>
                             </div>
                             <h2 className="text-center">CAMERAS</h2>
-                            <div className="btn-group d-flex flex-wrap">
+                            <div className="btn-group d-flex flex-wrap bg-blur">
                                 {cameraButtons}
                             </div>
 
