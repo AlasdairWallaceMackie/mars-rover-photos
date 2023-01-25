@@ -299,11 +299,17 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
-                            <h2 className="text-center">{earthDate.toUTCString().split(' ').slice(0, 4).join(' ')}</h2>
                             <div className="d-flex justify-content-center mb-4">
                                 <div className="btn-group">
-                                    <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(-1)}>Prev Day</button>
-                                    <button className="btn btn-light border" onClick={() => handleChangeEarthDateInterval(1)}>Next Day</button>
+                                    <button className="btn btn-outline-light border" onClick={() => handleChangeEarthDateInterval(-1)}>
+                                        <i className="ri-arrow-left-s-line align-bottom"></i>
+                                        Prev Day
+                                    </button>
+                                    <h2 className="border border-light text-center m-0 px-3 py-1">{earthDate.toUTCString().split(' ').slice(0, 4).join(' ')}</h2>
+                                    <button className="btn btn-outline-light border" onClick={() => handleChangeEarthDateInterval(1)}>
+                                        Next Day
+                                        <i className="ri-arrow-right-s-line align-bottom"></i>
+                                    </button>
                                 </div>
                             </div>
                             <h2 className="text-center">CAMERAS</h2>
