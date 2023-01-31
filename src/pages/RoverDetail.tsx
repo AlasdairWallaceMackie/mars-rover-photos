@@ -299,6 +299,7 @@ export default function RoverDetail(){
 
                     {firstFetch ?
                         <>
+                            {/* //TODO: Disable buttons if next/prev day is unavailable */}
                             <div className="d-flex justify-content-center mb-4">
                                 <div className="btn-group bg-blur">
                                     <button className="btn btn-outline-light border" onClick={() => handleChangeEarthDateInterval(-1)}>
@@ -306,7 +307,11 @@ export default function RoverDetail(){
                                         Prev Day
                                     </button>
                                     <h2 className="border border-light text-center m-0 px-3 py-1">{earthDate.toUTCString().split(' ').slice(0, 4).join(' ')}</h2>
-                                    <button className="btn btn-outline-light border" onClick={() => handleChangeEarthDateInterval(1)}>
+                                    <button
+                                        className="btn btn-outline-light border" 
+                                        onClick={() => handleChangeEarthDateInterval(1)}
+                                        disabled={earthDate.getTime() >= Date.parse(rover.max_date)}
+                                    >
                                         Next Day
                                         <i className="ri-arrow-right-s-line align-bottom"></i>
                                     </button>
