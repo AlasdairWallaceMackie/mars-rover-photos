@@ -286,7 +286,7 @@ export default function RoverDetail(){
                                 <input
                                     id="earth-date"
                                     type="date"
-                                    min={rover.launch_date}
+                                    min={rover.landing_date}
                                     max={rover.max_date}
                                     required={true}
                                     className="form-control"
