@@ -213,6 +213,16 @@ export default function RoverDetail(){
         handleSubmit()
     }
 
+    function handleLandingDateClick(){
+        let input = document.getElementById("earth-date") as HTMLInputElement
+        const landing_date = rover.landing_date
+
+
+        input.value = landing_date
+        setEarthDate(new Date(landing_date))
+        handleSubmit()
+    }
+
     function selectAllCameras(setting: boolean){
         setCameras(prevState => prevState.map(c => (
             {
@@ -300,6 +310,10 @@ export default function RoverDetail(){
                     {firstFetch ?
                         <>
                             <div className="d-flex justify-content-center mb-4">
+                                <button type="button" className="btn btn-outline-light bg-blur mx-3 text-nowrap" onClick={handleLandingDateClick}>
+                                    <i className="ri-rewind-mini-fill align-bottom mx-1"></i>
+                                    Landing Date
+                                </button>
                                 <div className="btn-group bg-blur">
                                     <button
                                         className="btn btn-outline-light border"
@@ -319,6 +333,10 @@ export default function RoverDetail(){
                                         <i className="ri-arrow-right-s-line align-bottom"></i>
                                     </button>
                                 </div>
+                                <button type="button" className="btn btn-outline-light bg-blur mx-3 text-nowrap" onClick={handleMostRecentDayClick}>
+                                    Most Recent
+                                    <i className="ri-speed-mini-fill align-bottom mx-1"></i>
+                                </button>
                             </div>
                             <h2 className="text-center">CAMERAS</h2>
                             <div className="btn-group d-flex flex-wrap bg-blur">
