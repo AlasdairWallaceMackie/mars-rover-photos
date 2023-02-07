@@ -235,6 +235,13 @@ export default function RoverDetail(){
 
 
 
+    function atBookendDate(type: "start"|"end"){
+        switch(type){
+            case "start": return earthDate.getTime() <= Date.parse(rover.landing_date)
+            case "end":   return earthDate.getTime() >= Date.parse(rover.max_date)
+        }
+    }
+    
 
     function parseDateFormat(date: Date){
         let year = date.getFullYear()
@@ -310,7 +317,12 @@ export default function RoverDetail(){
                     {firstFetch ?
                         <>
                             <div className="d-flex justify-content-center mb-4">
-                                <button type="button" className="btn btn-outline-light bg-blur mx-3 text-nowrap" onClick={handleLandingDateClick}>
+                                <button 
+                                    className="btn btn-outline-light bg-blur mx-3 text-nowrap"
+                                    type="button"
+                                    onClick={handleLandingDateClick}
+                                    disabled={atBookendDate("start")}
+                                >
                                     <i className="ri-rewind-mini-fill align-bottom mx-1"></i>
                                     Landing Date
                                 </button>
@@ -318,7 +330,7 @@ export default function RoverDetail(){
                                     <button
                                         className="btn btn-outline-light border"
                                         onClick={() => handleChangeEarthDateInterval(-1)}
-                                        disabled={earthDate.getTime() <= Date.parse(rover.landing_date)}
+                                        disabled={atBookendDate("start")}
                                     >
                                         <i className="ri-arrow-left-s-line align-bottom"></i>
                                         Prev Day
@@ -327,13 +339,18 @@ export default function RoverDetail(){
                                     <button
                                         className="btn btn-outline-light border" 
                                         onClick={() => handleChangeEarthDateInterval(1)}
-                                        disabled={earthDate.getTime() >= Date.parse(rover.max_date)}
+                                        disabled={atBookendDate("end")}
                                     >
                                         Next Day
                                         <i className="ri-arrow-right-s-line align-bottom"></i>
                                     </button>
                                 </div>
-                                <button type="button" className="btn btn-outline-light bg-blur mx-3 text-nowrap" onClick={handleMostRecentDayClick}>
+                                <button
+                                    className="btn btn-outline-light bg-blur mx-3 text-nowrap"
+                                    type="button"
+                                    onClick={handleMostRecentDayClick}
+                                    disabled={atBookendDate("end")}
+                                >
                                     Most Recent
                                     <i className="ri-speed-mini-fill align-bottom mx-1"></i>
                                 </button>
