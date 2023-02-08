@@ -375,7 +375,7 @@ export default function RoverDetail(){
                         <></>
                     }
 
-                    <div className="container-fluid d-flex flex-wrap justify-content-center">
+                    <div className="container-fluid d-flex flex-wrap justify-content-center text-center">
                         {photoDataElements}
                     </div>
                 
