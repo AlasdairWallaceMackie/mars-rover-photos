@@ -11,7 +11,7 @@ export default function App(){
 
     return (
         roverData ? 
-            <main className="p-4 bg-space text-light">
+            <main className="px-4 bg-space text-light">
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/rovers/" element={<Navigate to="/" />} />
