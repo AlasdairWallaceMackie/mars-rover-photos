@@ -93,11 +93,6 @@ main{
     text-transform: uppercase;
 }
 
-.rover-title{
-    text-align: center;
-    font-size: 5rem;
-}
-
 .text-success-bright{
     color: rgb(34, 191, 118);
 }

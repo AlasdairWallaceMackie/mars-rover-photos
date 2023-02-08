@@ -241,7 +241,6 @@ export default function RoverDetail(){
             case "end":   return earthDate.getTime() >= Date.parse(rover.max_date)
         }
     }
-    
 
     function parseDateFormat(date: Date){
         let year = date.getFullYear()
@@ -264,41 +263,17 @@ export default function RoverDetail(){
                         <span className="fs-2 mt-3">Back</span>
                     </Link>
 
-                    <h1 className="rover-title mb-4 mt-5 mt-md-0">{rover.name}</h1>
+                    <h1 id="rover--title" className="display-1 text-center mb-4 mt-5 mt-md-0">{rover.name}</h1>
 
                     <RoverNav
                         roverData={roverData}
                         currentRover={name!}
                     />
 
-                    <table className="table text-light">
-                        <tbody>
-                            <tr>
-                                <td>Launch Date</td>
-                                <td>{rover.launch_date}</td>
-                            </tr>
-                            <tr>
-                                <td>Landing Date</td>
-                                <td>{rover.landing_date}</td>
-                            </tr>
-                            <tr>
-                                <td>Martian Days on the planet</td>
-                                <td>{rover.max_sol}</td>
-                            </tr>
-                            <tr>
-                                <td>Photos Available</td>
-                                <td>{rover.total_photos}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <br/>
-
-                    <form onSubmit={handleSubmit}>
-                        <h1>PHOTOS</h1>
-
-                        <div className="d-flex mb-5 col-8 col-md-6 flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-none">
+                    <div className="d-flex justify-content-evenly flex-wrap-reverse">
+                        <form onSubmit={handleSubmit} className="my-auto">    
                             <div className="input-group me-3 mb-3 mb-sm-0">
+                                {/* //TODO: https://github.com/wojtekmaj/react-calendar */}
                                 <label className="input-group-text" htmlFor="earth-date">Earth Date</label>
                                 <input
                                     id="earth-date"
@@ -309,13 +284,41 @@ export default function RoverDetail(){
                                     className="form-control"
                                 />
                             </div>
-                            <input type="submit" className="btn btn-secondary"/>
-                            <button type="button" className="btn btn-light ms-2 text-nowrap" onClick={handleMostRecentDayClick}>Most Recent</button>
+                            <div className="d-flex justify-content-around mt-3">
+                                <input type="submit" className="btn btn-secondary"/>
+                                <button type="button" className="btn btn-light ms-2 text-nowrap" onClick={handleMostRecentDayClick}>Most Recent</button>
+                            </div>
+                        </form>
+
+                        <div className="mb-3 mb-md-0">
+                            <table className="table text-light">
+                                <tbody>
+                                    <tr>
+                                        <td>Launch Date</td>
+                                        <td>{rover.launch_date}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Landing Date</td>
+                                        <td>{rover.landing_date}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Martian Days on the planet</td>
+                                        <td>{rover.max_sol}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Photos Available</td>
+                                        <td>{rover.total_photos}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </form>
+                    </div>
+
+                    <br/>
 
                     {firstFetch ?
                         <>
+                            {/* //TODO: Make this look better on mobile */}
                             <div className="d-flex justify-content-center mb-4">
                                 <button 
                                     className="btn btn-outline-light bg-blur mx-3 text-nowrap"
