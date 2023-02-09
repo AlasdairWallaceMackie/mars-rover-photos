@@ -273,7 +273,6 @@ export default function RoverDetail(){
                     <div className="d-flex justify-content-evenly flex-wrap-reverse">
                         <form onSubmit={handleSubmit} className="my-auto">    
                             <div className="input-group me-3 mb-3 mb-sm-0">
-                                {/* //TODO: https://github.com/wojtekmaj/react-calendar */}
                                 <label className="input-group-text" htmlFor="earth-date">Earth Date</label>
                                 <input
                                     id="earth-date"
