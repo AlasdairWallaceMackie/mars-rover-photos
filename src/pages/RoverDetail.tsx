@@ -235,6 +235,8 @@ export default function RoverDetail(){
 
 
 
+
+
     function atBookendDate(type: "start"|"end"){
         switch(type){
             case "start": return earthDate.getTime() <= Date.parse(rover.landing_date)
@@ -249,6 +251,15 @@ export default function RoverDetail(){
 
         return `${year}-${month <= 9 ? "0" : ""}${month}-${day <= 9 ? "0" : ""}${day}`
     }
+
+    function getPrettyDate(date: Date|string){
+        if (typeof date == "string")
+            date = new Date(date)
+
+        return date.toUTCString().split(' ').slice(0, 4).join(' ')
+    }
+
+
 
 
 
@@ -294,11 +305,11 @@ export default function RoverDetail(){
                                 <tbody>
                                     <tr>
                                         <td>Launch Date</td>
-                                        <td>{rover.launch_date}</td>
+                                        <td>{getPrettyDate(rover.launch_date)}</td>
                                     </tr>
                                     <tr>
                                         <td>Landing Date</td>
-                                        <td>{rover.landing_date}</td>
+                                        <td>{getPrettyDate(rover.landing_date)}</td>
                                     </tr>
                                     <tr>
                                         <td>Martian Days on the planet</td>
@@ -337,7 +348,7 @@ export default function RoverDetail(){
                                         <i className="ri-arrow-left-s-line align-bottom"></i>
                                         Prev Day
                                     </button>
-                                    <h2 className="border border-light text-center m-0 px-3 py-1">{earthDate.toUTCString().split(' ').slice(0, 4).join(' ')}</h2>
+                                    <h2 className="border border-light text-center m-0 px-3 py-1">{getPrettyDate(earthDate)}</h2>
                                     <button
                                         className="btn btn-outline-light border" 
                                         onClick={() => handleChangeEarthDateInterval(1)}
